@@ -120,12 +120,12 @@ export default function Navbar() {
           backgroundColor: mobileOpen
             ? "rgba(21,47,143,0.95)"
             : scrolled
-              ? "rgba(8,10,14,0.92)"
-              : "rgba(8,10,14,0)",
+              ? "rgba(10,23,48,0.92)"
+              : "rgba(0,0,0,0)",
           borderBottomColor: scrolled
             ? "rgba(255,255,255,0.08)"
             : "rgba(255,255,255,0)",
-          backdropFilter: scrolled ? "blur(10px)" : "blur(0px)",
+          backdropFilter: scrolled || mobileOpen ? "blur(10px)" : "blur(0px)",
         }}
         transition={{ duration: 0.35, ease: "easeOut" }}
         className="relative z-[60] border-b"

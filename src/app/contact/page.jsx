@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 
 const contactMethods = [
   {
-    label: "info@accelia.com",
+    label: "acceliaclinicalsolution@gmail.com",
     sub: "Have a project in mind? Send a message.",
     icon: (
       <svg
@@ -30,7 +30,7 @@ const contactMethods = [
     ),
   },
   {
-    label: "(888) 595-0142",
+    label: "+91 8282986162",
     sub: "We're interested in working together.",
     icon: (
       <svg
@@ -46,7 +46,7 @@ const contactMethods = [
     ),
   },
   {
-    label: "1400 Innovation Way, Orlando, FL 32804",
+    label: "Kolkata, West Bengal, India",
     sub: "Would you like to join our growing team?",
     icon: (
       <svg
@@ -102,6 +102,7 @@ function Field({
   required = false,
   value,
   onChange,
+  onBlur,
   error,
 }) {
   return (
@@ -116,6 +117,7 @@ function Field({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         className={`w-full rounded-xl border px-4 py-3 text-slate-800 placeholder:text-slate-300 outline-none focus:ring-4 transition-all ${
           error
             ? "border-red-400 focus:border-red-400 focus:ring-red-100"
@@ -135,6 +137,7 @@ function SelectField({
   required = false,
   value,
   onChange,
+  onBlur,
   error,
 }) {
   return (
@@ -148,6 +151,7 @@ function SelectField({
           name={name}
           value={value}
           onChange={onChange}
+          onBlur={onBlur}
           className={`w-full appearance-none rounded-xl border px-4 py-3 pr-10 text-slate-800 outline-none focus:ring-4 transition-all ${
             error
               ? "border-red-400 focus:border-red-400 focus:ring-red-100"
@@ -185,6 +189,7 @@ function SelectField({
 const initialFormState = {
   organizationName: "",
   organizationType: "",
+  email: "",
   street: "",
   city: "",
   state: "",
@@ -197,6 +202,7 @@ const initialFormState = {
 const requiredFields = [
   "organizationName",
   "organizationType",
+  "email",
   "street",
   "city",
   "state",
@@ -215,6 +221,12 @@ function validateForm(values) {
 
   if (!values.organizationType) {
     errors.organizationType = "Please select an organization type.";
+  }
+
+  if (!values.email.trim()) {
+    errors.email = "Email is required.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+    errors.email = "Enter a valid email address.";
   }
 
   if (!values.street.trim()) {
@@ -459,8 +471,19 @@ export default function ContactPage() {
                   error={touched.organizationType && errors.organizationType}
                 />
                 <Field
+                  label="Email Address"
+                  placeholder="you@example.com"
+                  name="email"
+                  type="email"
+                  required
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={touched.email && errors.email}
+                />
+                <Field
                   label="Street"
-                  placeholder="1400 Innovation Way"
+                  placeholder="park street"
                   name="street"
                   required
                   value={values.street}
@@ -470,7 +493,7 @@ export default function ContactPage() {
                 />
                 <Field
                   label="City"
-                  placeholder="Orlando"
+                  placeholder="Kolkata"
                   name="city"
                   required
                   value={values.city}
@@ -480,7 +503,7 @@ export default function ContactPage() {
                 />
                 <Field
                   label="State"
-                  placeholder="FL"
+                  placeholder="West Bengal"
                   name="state"
                   required
                   value={values.state}
@@ -490,7 +513,7 @@ export default function ContactPage() {
                 />
                 <Field
                   label="Country"
-                  placeholder="United States"
+                  placeholder="India"
                   name="country"
                   required
                   value={values.country}
@@ -500,7 +523,7 @@ export default function ContactPage() {
                 />
                 <Field
                   label="Zip Code"
-                  placeholder="32804"
+                  placeholder="700124"
                   name="zipCode"
                   required
                   value={values.zipCode}
