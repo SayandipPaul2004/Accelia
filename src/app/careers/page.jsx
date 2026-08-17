@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Hero from "@/components/Hero";
+import Hero from "@/components/Careershero";
 import FilterBar from "@/components/FilterBar";
 import JobGrid from "@/components/JobGrid";
 import JobModal from "@/components/JobModal";
@@ -46,14 +46,14 @@ export default function CareersPage() {
   }
 
   return (
-    <main className="min-h-screen bg-paper">
+    <main className="min-h-screen bg-white">
       <Hero onExplore={scrollToExplore} />
 
       <section className="max-w-7xl mx-auto px-6 md:px-10 pt-14 pb-2">
-        <span className="inline-block rounded-full bg-teal-500 text-white text-xs font-semibold uppercase tracking-wider px-4 py-1.5">
+        <span className="inline-block rounded-full bg-[#2547d0] text-white text-xs font-semibold uppercase tracking-wider px-4 py-1.5">
           Open positions
         </span>
-        <h2 className="font-display text-3xl md:text-4xl text-navy-900 mt-4">
+        <h2 className="font-display text-3xl md:text-4xl text-slate-950 mt-4">
           Current Openings
         </h2>
       </section>

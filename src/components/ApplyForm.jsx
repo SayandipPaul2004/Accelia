@@ -104,7 +104,7 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
               cy="40"
               r="34"
               fill="none"
-              stroke="#E2E8E6"
+              stroke="#E2E8F0"
               strokeWidth="6"
             />
             <motion.circle
@@ -112,7 +112,7 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
               cy="40"
               r="34"
               fill="none"
-              stroke="#14B8A6"
+              stroke="#2547d0"
               strokeWidth="6"
               strokeLinecap="round"
               strokeDasharray={2 * Math.PI * 34}
@@ -122,14 +122,14 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
               transition={{ ease: "easeOut", duration: 0.25 }}
             />
           </svg>
-          <div className="absolute inset-0 flex items-center justify-center font-mono text-sm text-ink">
+          <div className="absolute inset-0 flex items-center justify-center font-mono text-sm text-slate-950">
             {Math.round(progress)}%
           </div>
         </div>
-        <p className="font-display font-semibold text-ink">
+        <p className="font-display font-semibold text-slate-950">
           Submitting your application&hellip;
         </p>
-        <p className="text-sm text-ink-soft mt-1">Uploading {file?.name}</p>
+        <p className="text-sm text-slate-600 mt-1">Uploading {file?.name}</p>
       </div>
     );
   }
@@ -138,16 +138,16 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
     <div className="px-6 md:px-8 py-6">
       <button
         onClick={onBack}
-        className="focus-ring inline-flex items-center gap-1.5 text-sm text-ink-soft hover:text-teal-600 transition-colors mb-5"
+        className="inline-flex items-center gap-1.5 text-sm text-slate-600 hover:text-[#2547d0] transition-colors mb-5 outline-none"
       >
         <ArrowLeft className="w-4 h-4" />
         Back to role details
       </button>
 
-      <h3 className="font-display text-xl font-semibold text-ink">
+      <h3 className="font-display text-xl font-semibold text-slate-950">
         Apply for {job.title}
       </h3>
-      <p className="font-mono text-xs text-teal-600 mt-1">{job.id}</p>
+      <p className="font-mono text-xs text-[#2547d0] mt-1">{job.id}</p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-5">
         <div className="grid sm:grid-cols-2 gap-5">
@@ -197,7 +197,7 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
 
         {/* CV upload */}
         <div>
-          <label className="text-xs font-medium uppercase tracking-wide text-ink-soft">
+          <label className="text-xs font-medium uppercase tracking-wide text-slate-600">
             Resume / CV
           </label>
           <div
@@ -210,10 +210,10 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
             onClick={() => inputRef.current?.click()}
             className={`mt-2 rounded-xl border-2 border-dashed transition-colors cursor-pointer px-6 py-8 text-center ${
               dragActive
-                ? "border-teal-500 bg-teal-50"
+                ? "border-[#2547d0] bg-[#2547d0]/5"
                 : errors.file
-                  ? "border-coral-500/50 bg-coral-500/5"
-                  : "border-line bg-paper hover:border-teal-500/40"
+                  ? "border-red-400/60 bg-red-50"
+                  : "border-slate-200 bg-slate-50/60 hover:border-[#2547d0]/40"
             }`}
           >
             <input
@@ -225,30 +225,32 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
             />
             {!file ? (
               <>
-                <UploadCloud className="w-6 h-6 mx-auto text-ink-faint" />
-                <p className="text-sm text-ink mt-2">
-                  <span className="text-teal-600 font-medium">
+                <UploadCloud className="w-6 h-6 mx-auto text-slate-400" />
+                <p className="text-sm text-slate-950 mt-2">
+                  <span className="text-[#2547d0] font-medium">
                     Click to upload
                   </span>{" "}
                   or drag and drop
                 </p>
-                <p className="text-xs text-ink-faint mt-1">
+                <p className="text-xs text-slate-400 mt-1">
                   PDF or Word, up to 5MB
                 </p>
               </>
             ) : (
               <div
-                className="flex items-center justify-between gap-3 bg-white rounded-lg border border-line px-4 py-3 text-left"
+                className="flex items-center justify-between gap-3 bg-white rounded-lg border border-slate-200 px-4 py-3 text-left"
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <FileText className="w-5 h-5 text-teal-600 shrink-0" />
-                  <span className="text-sm text-ink truncate">{file.name}</span>
+                  <FileText className="w-5 h-5 text-[#2547d0] shrink-0" />
+                  <span className="text-sm text-slate-950 truncate">
+                    {file.name}
+                  </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setFile(null)}
-                  className="focus-ring shrink-0 text-ink-faint hover:text-coral-500 transition-colors"
+                  className="shrink-0 text-slate-400 hover:text-red-500 transition-colors outline-none"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -261,7 +263,7 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                className="text-xs text-coral-500 mt-1.5"
+                className="text-xs text-red-500 mt-1.5"
               >
                 {errors.file}
               </motion.p>
@@ -282,11 +284,11 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
         <motion.button
           whileTap={{ scale: 0.98 }}
           type="submit"
-          className="focus-ring w-full rounded-full bg-navy-950 hover:bg-navy-900 transition-colors text-white font-semibold py-3.5"
+          className="w-full rounded-full bg-[#2547d0] hover:bg-[#1d3aa8] transition-colors text-white font-semibold py-3.5 outline-none"
         >
           Submit application
         </motion.button>
-        <p className="text-xs text-ink-faint text-center">
+        <p className="text-xs text-slate-400 text-center">
           By applying you agree to let Accelia store your details for this
           hiring process.
         </p>
@@ -298,7 +300,7 @@ export default function ApplyForm({ job, onBack, onSubmitted }) {
 function Field({ label, error, children }) {
   return (
     <div>
-      <label className="text-xs font-medium uppercase tracking-wide text-ink-soft">
+      <label className="text-xs font-medium uppercase tracking-wide text-slate-600">
         {label}
       </label>
       <div className="mt-1.5">{children}</div>
@@ -308,7 +310,7 @@ function Field({ label, error, children }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="text-xs text-coral-500 mt-1"
+            className="text-xs text-red-500 mt-1"
           >
             {error}
           </motion.p>
@@ -319,8 +321,8 @@ function Field({ label, error, children }) {
 }
 
 function inputClass(error) {
-  return `focus-ring w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-ink placeholder:text-ink-faint transition-colors ${
-    error ? "border-coral-500/60" : "border-line focus:border-teal-500/60"
+  return `w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-slate-950 placeholder:text-slate-400 outline-none transition-colors focus:ring-2 focus:ring-[#2547d0]/20 ${
+    error ? "border-red-400/70" : "border-slate-200 focus:border-[#2547d0]/60"
   }`;
 }
 
@@ -332,13 +334,13 @@ export function SuccessScreen({ job, applicant, onClose }) {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 18 }}
       >
-        <CheckCircle2 className="w-16 h-16 text-teal-500" strokeWidth={1.5} />
+        <CheckCircle2 className="w-16 h-16 text-[#2547d0]" strokeWidth={1.5} />
       </motion.div>
       <motion.h3
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="font-display text-xl font-semibold text-ink mt-5"
+        className="font-display text-xl font-semibold text-slate-950 mt-5"
       >
         Application received
       </motion.h3>
@@ -346,20 +348,20 @@ export function SuccessScreen({ job, applicant, onClose }) {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.22 }}
-        className="text-sm text-ink-soft mt-2 max-w-sm"
+        className="text-sm text-slate-600 mt-2 max-w-sm"
       >
         Thanks, {applicant?.name?.split(" ")[0] || "there"} &mdash; we've
         received your application for{" "}
-        <span className="text-ink font-medium">{job.title}</span> ({job.id}).
-        Our talent team reviews every submission and will reach out within
-        5&ndash;7 business days.
+        <span className="text-slate-950 font-medium">{job.title}</span> (
+        {job.id}). Our talent team reviews every submission and will reach out
+        within 5&ndash;7 business days.
       </motion.p>
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
         onClick={onClose}
-        className="focus-ring mt-8 rounded-full border border-line px-6 py-2.5 text-sm font-medium text-ink hover:border-teal-500/50 transition-colors"
+        className="mt-8 rounded-full border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-950 hover:border-[#2547d0]/50 hover:text-[#2547d0] transition-colors outline-none"
       >
         Back to open roles
       </motion.button>

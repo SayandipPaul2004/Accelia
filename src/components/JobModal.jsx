@@ -1,14 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, MapPin, Clock, BriefcaseBusiness } from "lucide-react";
+import {
+  X,
+  MapPin,
+  Clock,
+  BriefcaseBusiness,
+  ShieldCheck,
+  GraduationCap,
+  Globe,
+  HeartHandshake,
+} from "lucide-react";
 import ApplyForm, { SuccessScreen } from "./ApplyForm";
 import { formatPostedDate } from "@/lib/utils";
+
+const defaultPerks = [
+  { icon: ShieldCheck, label: "Health & wellness coverage" },
+  { icon: GraduationCap, label: "Learning & certification budget" },
+  { icon: Globe, label: "Flexible / remote-friendly setup" },
+  { icon: HeartHandshake, label: "Collaborative, mission-led team" },
+];
 
 export default function JobModal({ job, onClose }) {
   const [view, setView] = useState("jd"); // 'jd' | 'apply' | 'success'
   const [applicant, setApplicant] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (job) setView("jd");
@@ -18,7 +40,9 @@ export default function JobModal({ job, onClose }) {
     };
   }, [job]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {job && (
         <>
@@ -27,130 +51,156 @@ export default function JobModal({ job, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 bg-navy-950/60 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-[#0A1730]/60 backdrop-blur-sm z-[70]"
             onClick={onClose}
           />
 
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 320, damping: 34 }}
-            className="fixed top-0 right-0 h-full w-full sm:w-[520px] bg-paper z-50 shadow-2xl flex flex-col"
-          >
-            <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-line shrink-0">
-              <span className="font-mono text-xs text-ink-faint uppercase tracking-wide">
-                {view === "apply"
-                  ? "Application"
-                  : view === "success"
-                    ? "Submitted"
-                    : "Role details"}
-              </span>
-              <button
-                onClick={onClose}
-                className="focus-ring text-ink-faint hover:text-ink transition-colors"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+          <div className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center sm:p-6 pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 40 }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+              className="pointer-events-auto w-full sm:max-w-xl h-[92vh] sm:h-auto sm:max-h-[85vh] bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            >
+              {/* mobile drag handle */}
+              <div className="sm:hidden flex justify-center pt-3 pb-1 shrink-0">
+                <span className="w-10 h-1.5 rounded-full bg-slate-200" />
+              </div>
 
-            <div className="overflow-y-auto thin-scroll flex-1">
-              <AnimatePresence mode="wait">
+              <div className="flex items-center justify-between px-6 md:px-8 py-4 sm:py-5 border-b border-slate-200 shrink-0">
+                <span className="font-mono text-xs text-slate-400 uppercase tracking-wide">
+                  {view === "apply"
+                    ? "Application"
+                    : view === "success"
+                      ? "Submitted"
+                      : "Role details"}
+                </span>
+                <button
+                  onClick={onClose}
+                  className="text-slate-400 hover:text-slate-950 transition-colors outline-none"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="overflow-y-auto overscroll-contain flex-1 min-h-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <AnimatePresence mode="wait">
+                  {view === "jd" && (
+                    <motion.div
+                      key="jd"
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -12 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <JDView job={job} />
+                    </motion.div>
+                  )}
+
+                  {view === "apply" && (
+                    <motion.div
+                      key="apply"
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -12 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ApplyForm
+                        job={job}
+                        onBack={() => setView("jd")}
+                        onSubmitted={(data) => {
+                          setApplicant(data);
+                          setView("success");
+                        }}
+                      />
+                    </motion.div>
+                  )}
+
+                  {view === "success" && (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      <SuccessScreen
+                        job={job}
+                        applicant={applicant}
+                        onClose={onClose}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* sticky footer — Apply button always visible, only on the JD view */}
+              <AnimatePresence>
                 {view === "jd" && (
                   <motion.div
-                    key="jd"
-                    initial={{ opacity: 0, x: 12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -12 }}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
+                    className="shrink-0 border-t border-slate-200 bg-white px-6 md:px-8 py-4"
+                    style={{
+                      paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+                    }}
                   >
-                    <JDView job={job} onApply={() => setView("apply")} />
-                  </motion.div>
-                )}
-
-                {view === "apply" && (
-                  <motion.div
-                    key="apply"
-                    initial={{ opacity: 0, x: 12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -12 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ApplyForm
-                      job={job}
-                      onBack={() => setView("jd")}
-                      onSubmitted={(data) => {
-                        setApplicant(data);
-                        setView("success");
-                      }}
-                    />
-                  </motion.div>
-                )}
-
-                {view === "success" && (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <SuccessScreen
-                      job={job}
-                      applicant={applicant}
-                      onClose={onClose}
-                    />
+                    <button
+                      onClick={() => setView("apply")}
+                      className="w-full rounded-full bg-[#2547d0] hover:bg-[#1d3aa8] active:scale-[0.99] transition-all px-8 py-3.5 font-semibold text-white outline-none"
+                    >
+                      Apply for this role
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
 
-function JDView({ job, onApply }) {
+function JDView({ job }) {
+  const perks = job.perks?.length ? job.perks : defaultPerks;
+
   return (
-    <div className="px-6 md:px-8 py-6">
+    <div className="px-6 md:px-8 py-6 pb-10">
       {job.featured && (
-        <span className="inline-block rounded-full bg-gold-500 text-navy-950 text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 mb-3">
+        <span className="inline-block rounded-full bg-[#2547d0] text-white text-[10px] font-semibold uppercase tracking-wide px-2.5 py-1 mb-3">
           Featured role
         </span>
       )}
-      <p className="font-mono text-xs text-teal-600">{job.id}</p>
-      <h2 className="font-display text-2xl font-semibold text-ink mt-1.5 leading-snug">
+      <p className="font-mono text-xs text-[#2547d0]">{job.id}</p>
+      <h2 className="font-display text-2xl font-semibold text-slate-950 mt-1.5 leading-snug">
         {job.title}
       </h2>
 
-      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-soft">
+      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-600">
         <span className="inline-flex items-center gap-1.5">
-          <MapPin className="w-4 h-4 text-ink-faint" />
+          <MapPin className="w-4 h-4 text-slate-400" />
           {job.location}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <Clock className="w-4 h-4 text-ink-faint" />
+          <Clock className="w-4 h-4 text-slate-400" />
           {job.type}
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <BriefcaseBusiness className="w-4 h-4 text-ink-faint" />
+          <BriefcaseBusiness className="w-4 h-4 text-slate-400" />
           {job.experience}
         </span>
       </div>
-      <p className="text-xs text-ink-faint mt-3">
+      <p className="text-xs text-slate-400 mt-3">
         {job.department} &middot; Posted {formatPostedDate(job.posted)}
       </p>
 
-      <button
-        onClick={onApply}
-        className="focus-ring mt-6 w-full sm:w-auto rounded-full bg-teal-500 hover:bg-teal-600 transition-colors px-8 py-3 font-semibold text-white"
-      >
-        Apply for this role
-      </button>
-
       <Section title="About the role">
-        <p className="text-sm text-ink-soft leading-relaxed">{job.summary}</p>
+        <p className="text-sm text-slate-600 leading-relaxed">{job.summary}</p>
       </Section>
 
       <Section title="What you'll do">
@@ -179,14 +229,28 @@ function JDView({ job, onApply }) {
         </Section>
       )}
 
-      <div className="mt-8 pt-6 border-t border-line">
-        <button
-          onClick={onApply}
-          className="focus-ring w-full rounded-full bg-navy-950 hover:bg-navy-900 transition-colors text-white font-semibold py-3.5"
-        >
-          Apply for this role
-        </button>
-      </div>
+      <Section title="Why join Accelia">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {perks.map((p, i) => {
+            const Icon = p.icon;
+            return (
+              <div
+                key={i}
+                className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 px-3.5 py-3"
+              >
+                {Icon && (
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#2547d0]/10 text-[#2547d0] shrink-0">
+                    <Icon className="w-4 h-4" />
+                  </span>
+                )}
+                <span className="text-sm text-slate-600 leading-snug">
+                  {p.label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </Section>
     </div>
   );
 }
@@ -194,7 +258,7 @@ function JDView({ job, onApply }) {
 function Section({ title, children }) {
   return (
     <div className="mt-7">
-      <h3 className="font-display text-sm font-semibold text-ink uppercase tracking-wide">
+      <h3 className="font-display text-sm font-semibold text-slate-950 uppercase tracking-wide">
         {title}
       </h3>
       <div className="mt-3">{children}</div>
@@ -204,8 +268,8 @@ function Section({ title, children }) {
 
 function ListItem({ children }) {
   return (
-    <li className="flex gap-2.5 text-sm text-ink-soft leading-relaxed">
-      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0" />
+    <li className="flex gap-2.5 text-sm text-slate-600 leading-relaxed">
+      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#2547d0] shrink-0" />
       <span>{children}</span>
     </li>
   );

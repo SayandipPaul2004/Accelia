@@ -12,11 +12,11 @@ export default function JobGrid({ jobs, onOpen }) {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col items-center text-center py-24"
       >
-        <SearchX className="w-8 h-8 text-ink-faint mb-4" />
-        <p className="font-display text-lg text-ink font-semibold">
+        <SearchX className="w-8 h-8 text-slate-400 mb-4" />
+        <p className="font-display text-lg text-slate-950 font-semibold">
           No roles match those filters
         </p>
-        <p className="text-sm text-ink-soft mt-1.5 max-w-sm">
+        <p className="text-sm text-slate-600 mt-1.5 max-w-sm">
           Try widening your search, or clear filters to see every open
           requisition.
         </p>
