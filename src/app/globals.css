@@ -1,6 +1,5 @@
 /* app/globals.css */
 @import "tailwindcss";
-
 @theme {
   --color-primary: #2547d0;
   --color-primary-light: #4c6ae0;

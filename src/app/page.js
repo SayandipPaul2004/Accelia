@@ -15,11 +15,27 @@ export default function Home() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover -z-20"
+          className="absolute inset-0 w-full h-full object-cover -z-30"
         >
           <source src="/assets/clinic_video.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-slate-900/55 -z-10" />
+
+        <div
+          className="absolute inset-0 -z-20"
+          style={{
+            background:
+              "linear-gradient(135deg, #0a1854 0%, #16307a 35%, #2c4fa8 65%, #7f97c9 100%)",
+            mixBlendMode: "color",
+            opacity: 0.9,
+          }}
+        />
+        <div
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(6,12,40,0.85) 0%, rgba(10,20,60,0.6) 40%, rgba(20,30,70,0.35) 70%, rgba(30,40,80,0.15) 100%)",
+          }}
+        />
 
         <div className="flex flex-col justify-center min-h-screen pt-24 px-6 sm:px-10 max-w-5xl">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white uppercase leading-[1.1] sm:leading-[1.05]">

@@ -1,4 +1,3 @@
-// components/Footer.jsx
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -9,7 +8,7 @@ const columns = [
     title: "Company",
     links: [
       { label: "About Us", href: "/about" },
-      { label: "Mission & Vision", href: "/mission" },
+      { label: "Mission & Vision", href: "/about" },
       { label: "Careers", href: "/careers" },
     ],
   },
@@ -17,8 +16,6 @@ const columns = [
     title: "For Sites",
     links: [
       { label: "Why Join", href: "/sites/why-join" },
-      { label: "How It Works", href: "/sites/how-it-works" },
-      { label: "Register Your Site", href: "/sites/register" },
       { label: "FAQs", href: "/sites/faqs" },
     ],
   },
@@ -44,7 +41,7 @@ const fadeUp = {
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-br from-[#0A1730] via-[#101F38] to-[#123048] overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-[#232C6E] via-[#2C3A8C] to-[#3A4AA8] overflow-hidden">
       {/* organic blob shapes */}
       <div className="absolute right-0 top-0 w-[600px] h-[600px] -z-0 opacity-90">
         <svg viewBox="0 0 400 400" className="w-full h-full">
@@ -120,10 +117,10 @@ export default function Footer() {
                   />
                 </svg>
                 <a
-                  href="mailto:info@accelia.com"
+                  href="acceliaclinicalsolution@gmail.com"
                   className="text-white/80 hover:text-teal-300 text-[15px] transition-colors"
                 >
-                  info@accelia.com
+                  acceliaclinicalsolution@gmail.com
                 </a>
               </li>
               <li className="flex items-start gap-3">
@@ -146,9 +143,9 @@ export default function Footer() {
                   />
                 </svg>
                 <span className="text-white/80 text-[15px] leading-relaxed">
-                  1317 Edgewater Dr #6051
+                  Kolkata
                   <br />
-                  Orlando, FL 32804
+                  West Bengal
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -166,10 +163,10 @@ export default function Footer() {
                   />
                 </svg>
                 <a
-                  href="tel:+18885958884"
+                  href="+91 8282986162"
                   className="text-white/80 hover:text-teal-300 text-[15px] transition-colors"
                 >
-                  (888) 595-8884
+                  +91 8282986162
                 </a>
               </li>
             </ul>
@@ -190,7 +187,7 @@ export default function Footer() {
           {/* logo */}
           <Link href="/" className="shrink-0">
             <Image
-              src="/logo.png"
+              src="/assets/logo2.png"
               alt="Accelia"
               width={180}
               height={45}
@@ -216,7 +213,7 @@ export default function Footer() {
               href="tel:+18885958884"
               className="hover:text-teal-300 transition-colors"
             >
-              Call Us : (888) 595-8884
+              Call Us : +91 8282986162
             </a>
             <Link
               href="/blog"
