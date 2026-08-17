@@ -1,0 +1,36 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2547d0;
+  --color-primary-light: #4c6ae0;
+  --color-primary-dark: #1b36a6;
+
+  --color-secondary: #2dd4bf;
+  --color-secondary-light: #5eead4;
+  --color-secondary-dark: #14b8a6;
+
+  --color-dark: #0a1730;
+  --color-light: #f8fafc;
+  --color-muted: #64748b;
+
+  --font-sans: var(--font-jakarta), sans-serif;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+  will-change: transform; /* smoother GPU-accelerated animation */
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
