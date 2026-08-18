@@ -15,5 +15,5 @@ export async function fetchExpertise() {
     throw new Error(json.message || "Failed to load expertise");
   }
 
-  return json.data; // the actual array lives here
+  return json.data;
 }

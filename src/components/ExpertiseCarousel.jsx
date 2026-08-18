@@ -1,4 +1,3 @@
-// components/ExpertiseCarousel.jsx
 "use client";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
@@ -43,7 +42,6 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
     };
   }, [updateScrollState]);
 
-  // GSAP scroll-triggered entrance for the carousel section + cards
   useEffect(() => {
     if (expertiseAreas.length === 0) return;
 
@@ -124,21 +122,23 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
 
   return (
     <main className="bg-white">
-      {/* hero */}
-      <section className="relative bg-gradient-to-br from-[#0A1730] to-[#101F38] overflow-hidden">
+      <section className="relative min-h-[420px] sm:min-h-[560px] flex items-end overflow-hidden">
         <Navbar />
-        <div className="relative max-w-5xl px-6 md:px-10 pt-40 pb-24">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block text-teal-300 text-xs font-mono tracking-[0.2em] uppercase mb-5"
-          ></motion.span>
+
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/assets/expertise.jpg')" }}
+        />
+
+        {/* blue tint overlay — navy swapped for the brand blue */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2547d0]/90 via-[#2547d0]/70 to-[#16307a]/85" />
+
+        <div className="relative max-w-5xl px-6 md:px-10 pt-28 sm:pt-40 pb-16 sm:pb-24">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-[1.05]"
+            className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-4 sm:mb-6 leading-[1.1] sm:leading-[1.05]"
           >
             Our Areas of Expertise
           </motion.h1>
@@ -146,7 +146,7 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg text-white/70 leading-relaxed max-w-2xl"
+            className="text-base sm:text-lg text-white/80 leading-relaxed max-w-2xl"
           >
             Precision-driven execution across all critical specialty and
             therapeutic areas — backed by deep clinical knowledge and
@@ -156,8 +156,7 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
         </div>
       </section>
 
-      {/* carousel */}
-      <section ref={sectionRef} className="relative py-20">
+      <section ref={sectionRef} className="relative py-14 sm:py-20">
         {error && (
           <p className="text-center text-red-500 text-sm mb-6 px-6">
             Couldn&apos;t load expertise areas right now. Please refresh.
@@ -178,22 +177,24 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
               onPointerMove={onPointerMove}
               onPointerUp={endDrag}
               onPointerLeave={endDrag}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 px-6 md:px-10 scrollbar-hide cursor-grab select-none"
+              className="flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-6 px-6 md:px-10 scrollbar-hide cursor-grab select-none"
             >
               {expertiseAreas.map((area, i) => (
-                <div key={area._id} className="expertise-card-wrap">
+                <div key={area._id ?? i} className="expertise-card-wrap">
                   <ExpertiseCard
                     title={area.title}
                     description={area.desc}
                     icon={area.icon}
+                    image={area.image}
                     index={i}
                   />
                 </div>
               ))}
             </div>
 
-            <div className="flex items-center justify-between gap-6 mt-6 max-w-7xl mx-auto px-6 md:px-10">
-              <div className="flex items-center gap-2">
+            {/* nav row — centered on mobile, spread out on desktop */}
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 sm:gap-6 mt-6 max-w-7xl mx-auto px-6 md:px-10">
+              <div className="flex items-center gap-2 order-2 sm:order-1">
                 {expertiseAreas.map((_, i) => (
                   <button
                     key={i}
@@ -205,7 +206,7 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
                       animate={{
                         width: activeIndex === i ? 20 : 6,
                         backgroundColor:
-                          activeIndex === i ? "#0A1730" : "#CBD5E1",
+                          activeIndex === i ? "#2547d0" : "#CBD5E1",
                       }}
                       transition={{ duration: 0.25, ease: "easeOut" }}
                       className="block h-1.5 rounded-full"
@@ -214,16 +215,16 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
                 ))}
               </div>
 
-              <div className="hidden md:flex items-center gap-3">
+              <div className="flex items-center gap-3 order-1 sm:order-2">
                 <button
                   onClick={() => scroll("left")}
                   disabled={atStart}
-                  className="w-11 h-11 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:border-slate-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:border-slate-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
                   aria-label="Scroll left"
                 >
                   <svg
-                    width="18"
-                    height="18"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -235,12 +236,12 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
                 <button
                   onClick={() => scroll("right")}
                   disabled={atEnd}
-                  className="w-11 h-11 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:border-slate-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border border-slate-300 flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:border-slate-400 transition-colors disabled:opacity-30 disabled:pointer-events-none"
                   aria-label="Scroll right"
                 >
                   <svg
-                    width="18"
-                    height="18"
+                    width="16"
+                    height="16"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

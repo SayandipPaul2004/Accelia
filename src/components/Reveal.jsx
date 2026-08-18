@@ -1,5 +1,5 @@
 // components/Reveal.jsx
-"use client"; // harmless in Pages Router, but not required there — you can omit it
+"use client";
 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
