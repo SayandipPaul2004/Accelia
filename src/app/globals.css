@@ -1,6 +1,7 @@
 /* app/globals.css */
 @import "tailwindcss";
 @theme {
+  /* ── original brand tokens (kept) ── */
   --color-primary: #2547d0;
   --color-primary-light: #4c6ae0;
   --color-primary-dark: #1b36a6;
@@ -13,7 +14,43 @@
   --color-light: #f8fafc;
   --color-muted: #64748b;
 
+  /* ── text / surface tokens used across careers page ── */
+  --color-ink: #0a1730;
+  --color-ink-soft: #4b5568;
+  --color-ink-faint: #94a3b8;
+
+  --color-paper: #f8fafc;
+  --color-line: #e2e8f0;
+
+  /* ── navy scale (nav, hero background, buttons) ── */
+  --color-navy-50: #eef1f9;
+  --color-navy-100: #d6dcef;
+  --color-navy-400: #4c5d8a;
+  --color-navy-800: #182c5c;
+  --color-navy-900: #13234a;
+  --color-navy-950: #0a1730;
+
+  /* ── teal scale (CTA buttons) ── */
+  --color-teal-50: #effdfb;
+  --color-teal-100: #ccfbf1;
+  --color-teal-500: #2dd4bf;
+  --color-teal-600: #14b8a6;
+
+  /* ── accent colors ── */
+  --color-coral-500: #f4574d;
+  --color-gold-500: #f5b301;
+
+  /* ── typography ── */
   --font-sans: var(--font-jakarta), sans-serif;
+  --font-display: var(--font-jakarta), sans-serif;
+
+  /* ── radius / shadow tokens ── */
+  --radius-xl2: 1.25rem;
+
+  --shadow-card:
+    0 1px 2px 0 rgba(10, 23, 48, 0.04), 0 1px 6px -1px rgba(10, 23, 48, 0.06);
+  --shadow-card-hover:
+    0 4px 12px -2px rgba(10, 23, 48, 0.1), 0 2px 6px -2px rgba(10, 23, 48, 0.06);
 }
 
 @keyframes marquee {

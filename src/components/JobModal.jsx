@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import {
   X,
   MapPin,
@@ -13,7 +14,6 @@ import {
   Globe,
   HeartHandshake,
 } from "lucide-react";
-import ApplyForm, { SuccessScreen } from "./ApplyForm";
 import { formatPostedDate } from "@/lib/utils";
 
 const defaultPerks = [
@@ -24,8 +24,6 @@ const defaultPerks = [
 ];
 
 export default function JobModal({ job, onClose }) {
-  const [view, setView] = useState("jd"); // 'jd' | 'apply' | 'success'
-  const [applicant, setApplicant] = useState(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -33,7 +31,6 @@ export default function JobModal({ job, onClose }) {
   }, []);
 
   useEffect(() => {
-    if (job) setView("jd");
     document.body.style.overflow = job ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -51,7 +48,7 @@ export default function JobModal({ job, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 bg-[#0A1730]/60 backdrop-blur-sm z-[70]"
+            className="fixed inset-0 bg-[#0A1730]/60 backdrop-blur-sm z-[70] cursor-pointer"
             onClick={onClose}
           />
 
@@ -61,7 +58,7 @@ export default function JobModal({ job, onClose }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 40 }}
               transition={{ type: "spring", stiffness: 320, damping: 32 }}
-              className="pointer-events-auto w-full sm:max-w-xl h-[92vh] sm:h-auto sm:max-h-[85vh] bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+              className="pointer-events-auto w-full sm:max-w-xl h-[92vh] sm:h-[85vh] bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
             >
               {/* mobile drag handle */}
               <div className="sm:hidden flex justify-center pt-3 pb-1 shrink-0">
@@ -70,93 +67,43 @@ export default function JobModal({ job, onClose }) {
 
               <div className="flex items-center justify-between px-6 md:px-8 py-4 sm:py-5 border-b border-slate-200 shrink-0">
                 <span className="font-mono text-xs text-slate-400 uppercase tracking-wide">
-                  {view === "apply"
-                    ? "Application"
-                    : view === "success"
-                      ? "Submitted"
-                      : "Role details"}
+                  Role details
                 </span>
                 <button
                   onClick={onClose}
-                  className="text-slate-400 hover:text-slate-950 transition-colors outline-none"
+                  className="text-slate-400 hover:text-slate-950 transition-colors outline-none cursor-pointer"
                   aria-label="Close"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
-              <div className="overflow-y-auto overscroll-contain flex-1 min-h-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                <AnimatePresence mode="wait">
-                  {view === "jd" && (
-                    <motion.div
-                      key="jd"
-                      initial={{ opacity: 0, x: 12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -12 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <JDView job={job} />
-                    </motion.div>
-                  )}
-
-                  {view === "apply" && (
-                    <motion.div
-                      key="apply"
-                      initial={{ opacity: 0, x: 12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -12 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ApplyForm
-                        job={job}
-                        onBack={() => setView("jd")}
-                        onSubmitted={(data) => {
-                          setApplicant(data);
-                          setView("success");
-                        }}
-                      />
-                    </motion.div>
-                  )}
-
-                  {view === "success" && (
-                    <motion.div
-                      key="success"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <SuccessScreen
-                        job={job}
-                        applicant={applicant}
-                        onClose={onClose}
-                      />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              {/*
+                data-lenis-prevent excludes this element from Lenis's global
+                wheel-event hijacking so desktop scroll works inside the modal.
+              */}
+              <div
+                data-lenis-prevent
+                className="overflow-y-auto overscroll-contain flex-1 min-h-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                <JDView job={job} />
               </div>
 
-              {/* sticky footer — Apply button always visible, only on the JD view */}
-              <AnimatePresence>
-                {view === "jd" && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 8 }}
-                    transition={{ duration: 0.2 }}
-                    className="shrink-0 border-t border-slate-200 bg-white px-6 md:px-8 py-4"
-                    style={{
-                      paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
-                    }}
-                  >
-                    <button
-                      onClick={() => setView("apply")}
-                      className="w-full rounded-full bg-[#2547d0] hover:bg-[#1d3aa8] active:scale-[0.99] transition-all px-8 py-3.5 font-semibold text-white outline-none"
-                    >
-                      Apply for this role
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* sticky footer — now links to the dedicated apply page instead
+                  of switching an internal modal view */}
+              <div
+                className="shrink-0 border-t border-slate-200 bg-white px-6 md:px-8 py-4"
+                style={{
+                  paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+                }}
+              >
+                <Link
+                  href={`/careers/apply/${job.id}`}
+                  className="block w-full text-center rounded-full bg-[#2547d0] hover:bg-[#1d3aa8] active:scale-[0.99] transition-all px-8 py-3.5 font-semibold text-white outline-none cursor-pointer"
+                >
+                  Apply for this role
+                </Link>
+              </div>
             </motion.div>
           </div>
         </>
