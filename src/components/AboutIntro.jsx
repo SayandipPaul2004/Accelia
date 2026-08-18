@@ -5,7 +5,6 @@ import Link from "next/link";
 export default function AboutIntro() {
   return (
     <section className="relative overflow-hidden py-20 px-6 sm:px-10">
-      {/* decorative blob shapes on the right - optional, using simple divs */}
       <div className="absolute -right-20 top-10 w-72 h-72 bg-blue-300/60 rounded-[50%] rotate-45 blur-sm -z-10 hidden lg:block" />
       <div className="absolute -right-40 top-40 w-72 h-72 bg-teal-300/60 rounded-[50%] rotate-12 blur-sm -z-10 hidden lg:block" />
       <div className="absolute -right-10 top-72 w-80 h-80 bg-cyan-300/70 rounded-[50%] -rotate-12 blur-sm -z-10 hidden lg:block" />
@@ -14,8 +13,8 @@ export default function AboutIntro() {
         {/* Logo */}
         <div className="mb-8 flex justify-center">
           <Image
-            src="/assets/logo.png" // 👈 update this path to your actual logo file
-            alt="Clinosis"
+            src="/assets/logo3.png"
+            alt="Accelia Clinical Soluttions"
             width={280}
             height={90}
             className="h-auto w-auto"

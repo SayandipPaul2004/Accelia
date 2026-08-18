@@ -187,7 +187,7 @@ export default function Footer() {
           {/* logo */}
           <Link href="/" className="shrink-0">
             <Image
-              src="/assets/logo2.png"
+              src="/assets/logo(main).png"
               alt="Accelia"
               width={180}
               height={45}

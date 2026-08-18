@@ -1,9 +1,10 @@
-// app/layout.js
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
+import LogoIntro from "@/components/LogoIntro";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -15,10 +16,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={jakarta.variable}>
       <body className={jakarta.className}>
-        <SmoothScroll />
-        {children}
-        <Navbar />
-        <Footer />
+        <LogoIntro>
+          <SmoothScroll />
+
+          {children}
+
+          <Navbar />
+          <Footer />
+        </LogoIntro>
       </body>
     </html>
   );

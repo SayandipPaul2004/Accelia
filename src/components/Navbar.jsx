@@ -33,12 +33,14 @@ export default function Navbar() {
   const botBarRef = useRef(null);
   const tlRef = useRef(null);
   const isFirstRun = useRef(true);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   useEffect(() => {
     if (mobileOpen) {
       const prev = document.body.style.overflow;
@@ -48,6 +50,7 @@ export default function Navbar() {
       };
     }
   }, [mobileOpen]);
+
   useEffect(() => {
     if (!mobileOpen) return;
     const onKeyDown = (e) => {
@@ -59,6 +62,7 @@ export default function Navbar() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [mobileOpen]);
+
   useEffect(() => {
     const top = topBarRef.current;
     const mid = midBarRef.current;
@@ -84,11 +88,8 @@ export default function Navbar() {
     };
   }, []);
 
-  /* ---------- play/reverse the SAME persisted timeline on toggle ---------- */
   useEffect(() => {
     if (!tlRef.current) return;
-    // Skip the very first run: the bars already render in the correct
-    // hamburger state by default, so no animation is needed on mount.
     if (isFirstRun.current) {
       isFirstRun.current = false;
       return;
@@ -107,7 +108,7 @@ export default function Navbar() {
       <motion.div
         animate={{
           backgroundColor: mobileOpen
-            ? "rgba(21,47,143,0.95)"
+            ? "#2547d0"
             : scrolled
               ? "rgba(10,23,48,0.92)"
               : "rgba(0,0,0,0)",
@@ -121,7 +122,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
           <div className="relative flex items-center justify-between h-16 sm:h-20 md:h-20">
-            {/* Logo — visible at every breakpoint */}
+            {/* 1. Left: Logo */}
             <Link
               href="/"
               className="flex items-center shrink-0 group relative z-10"
@@ -132,99 +133,100 @@ export default function Navbar() {
                 transition={{ duration: 0.2 }}
               >
                 <Image
-                  src="/assets/logo2.png"
+                  src="/assets/logo(main).png"
                   alt="Accelia"
-                  width={400}
-                  height={400}
+                  width={700}
+                  height={700}
                   priority
                   className="h-9 sm:h-11 md:h-12 w-auto object-contain"
                 />
               </motion.div>
             </Link>
 
-            <div className="hidden md:flex items-center gap-6 lg:gap-8">
-              {/* Desktop nav with shared sliding indicator */}
-              <div
-                className="flex items-center gap-0.5 relative"
-                onMouseLeave={() => setHoverIndex(null)}
-              >
-                {navLinks.map((link, i) => (
-                  <div
-                    key={link.label}
-                    className="relative"
-                    onMouseEnter={() => {
-                      setHoverIndex(i);
-                      link.dropdown && setOpenDropdown(link.label);
-                    }}
-                    onMouseLeave={() => link.dropdown && setOpenDropdown(null)}
-                  >
-                    {hoverIndex === i && (
-                      <motion.div
-                        layoutId="nav-hover-pill"
-                        className="absolute inset-0 bg-white/10 rounded-full"
-                        transition={{
-                          type: "spring",
-                          stiffness: 420,
-                          damping: 34,
-                        }}
-                      />
-                    )}
-                    <Link href={link.href} className="relative z-10 block">
-                      <span className="flex items-center gap-1 text-white/90 hover:text-white font-medium text-[15px] lg:text-base tracking-tight transition-colors px-3.5 py-2 rounded-full">
-                        {link.label}
-                        {link.dropdown && (
-                          <motion.svg
-                            width="13"
-                            height="13"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.5"
-                            animate={{
-                              rotate: openDropdown === link.label ? 180 : 0,
-                            }}
-                            transition={{ duration: 0.25 }}
-                          >
-                            <path d="M6 9l6 6 6-6" />
-                          </motion.svg>
-                        )}
-                      </span>
-                    </Link>
-
-                    <AnimatePresence>
-                      {link.dropdown && openDropdown === link.label && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 10, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.97 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                          className="absolute top-full left-0 mt-3 w-56 rounded-2xl bg-white/95 backdrop-blur-xl border border-white/40 shadow-2xl overflow-hidden py-2"
+            {/* 2. Center: Desktop Nav Links (Absolute Centered with wider gaps) */}
+            <div
+              className="hidden md:flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 gap-4 lg:gap-10"
+              onMouseLeave={() => setHoverIndex(null)}
+            >
+              {navLinks.map((link, i) => (
+                <div
+                  key={link.label}
+                  className="relative"
+                  onMouseEnter={() => {
+                    setHoverIndex(i);
+                    link.dropdown && setOpenDropdown(link.label);
+                  }}
+                  onMouseLeave={() => link.dropdown && setOpenDropdown(null)}
+                >
+                  {hoverIndex === i && (
+                    <motion.div
+                      layoutId="nav-hover-pill"
+                      className="absolute inset-0 bg-white/10 rounded-full"
+                      transition={{
+                        type: "spring",
+                        stiffness: 420,
+                        damping: 34,
+                      }}
+                    />
+                  )}
+                  <Link href={link.href} className="relative z-10 block">
+                    <span className="flex items-center gap-1.5 text-white/90 hover:text-white font-medium text-[15px] lg:text-base tracking-tight transition-colors px-4 py-2 rounded-full whitespace-nowrap">
+                      {link.label}
+                      {link.dropdown && (
+                        <motion.svg
+                          width="13"
+                          height="13"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          animate={{
+                            rotate: openDropdown === link.label ? 180 : 0,
+                          }}
+                          transition={{ duration: 0.25 }}
                         >
-                          {link.dropdown.map((item, di) => (
-                            <motion.div
-                              key={item.label}
-                              initial={{ opacity: 0, x: -8 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: di * 0.045, duration: 0.15 }}
-                            >
-                              <Link
-                                href={item.href}
-                                className="group flex items-center gap-2 px-5 py-2.5 text-slate-700 hover:bg-[#2547d0]/8 hover:text-[#2547d0] text-sm transition-colors duration-200"
-                              >
-                                <span className="h-1 w-1 rounded-full bg-[#2547d0] scale-0 group-hover:scale-100 transition-transform duration-200" />
-                                {item.label}
-                              </Link>
-                            </motion.div>
-                          ))}
-                        </motion.div>
+                          <path d="M6 9l6 6 6-6" />
+                        </motion.svg>
                       )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
+                    </span>
+                  </Link>
 
-              {/* Desktop CTA */}
+                  <AnimatePresence>
+                    {link.dropdown && openDropdown === link.label && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.97 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56 rounded-2xl bg-white/95 backdrop-blur-xl border border-white/40 shadow-2xl overflow-hidden py-2"
+                      >
+                        {link.dropdown.map((item, di) => (
+                          <motion.div
+                            key={item.label}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: di * 0.045, duration: 0.15 }}
+                          >
+                            <Link
+                              href={item.href}
+                              className="group flex items-center gap-2 px-5 py-2.5 text-slate-700 hover:bg-[#2547d0]/8 hover:text-[#2547d0] text-sm transition-colors duration-200"
+                            >
+                              <span className="h-1 w-1 rounded-full bg-[#2547d0] scale-0 group-hover:scale-100 transition-transform duration-200" />
+                              {item.label}
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+
+            {/* 3. Right: CTA & Mobile Hamburger Menu */}
+            <div className="flex items-center gap-4 z-10 ml-auto">
               <motion.div
+                className="hidden md:block"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -247,31 +249,31 @@ export default function Navbar() {
                   </span>
                 </Link>
               </motion.div>
-            </div>
 
-            {/* Mobile hamburger — in normal flow inside the header row, which stays pinned since <nav> is fixed */}
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="md:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-full bg-white/10 active:bg-[#2547d0]/40 active:scale-90 backdrop-blur-sm transition-[background-color,transform] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-[#2547d0]"
-              style={{ WebkitTapHighlightColor: "transparent" }}
-              aria-label={mobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileOpen}
-            >
-              <span
-                ref={topBarRef}
-                className="absolute w-5 h-[2px] bg-white rounded-full"
-                style={{ transform: "translateY(-6px)" }}
-              />
-              <span
-                ref={midBarRef}
-                className="absolute w-5 h-[2px] bg-white rounded-full"
-              />
-              <span
-                ref={botBarRef}
-                className="absolute w-5 h-[2px] bg-white rounded-full"
-                style={{ transform: "translateY(6px)" }}
-              />
-            </button>
+              {/* Mobile Hamburger */}
+              <button
+                onClick={() => setMobileOpen((v) => !v)}
+                className="md:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-full bg-white/10 active:bg-[#2547d0]/40 active:scale-90 backdrop-blur-sm transition-[background-color,transform] duration-150 outline-none focus-visible:ring-2 focus-visible:ring-[#2547d0]"
+                style={{ WebkitTapHighlightColor: "transparent" }}
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+              >
+                <span
+                  ref={topBarRef}
+                  className="absolute w-5 h-[2px] bg-white rounded-full"
+                  style={{ transform: "translateY(-6px)" }}
+                />
+                <span
+                  ref={midBarRef}
+                  className="absolute w-5 h-[2px] bg-white rounded-full"
+                />
+                <span
+                  ref={botBarRef}
+                  className="absolute w-5 h-[2px] bg-white rounded-full"
+                  style={{ transform: "translateY(6px)" }}
+                />
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>
