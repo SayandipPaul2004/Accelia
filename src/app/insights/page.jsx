@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import SpinnerTestButton from "@/components/SpinnerTestButton";
 
 const articles = [
   {
@@ -128,6 +129,8 @@ function ArticleCard({ article }) {
 export default function InsightsPage() {
   return (
     <main>
+      {/* TEMPORARY — remove once the spinner is confirmed working */}
+      {/* <SpinnerTestButton /> */}
       {/* Dark hero — navbar blends into this, matching the contact page */}
       <section className="bg-gradient-to-br from-[#0B2E5C] to-[#1E5A96] pt-32 pb-16 sm:pt-44 sm:pb-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

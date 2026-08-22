@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import LogoIntro from "@/components/LogoIntro";
+import { LoadingProvider } from "@/context/LoadingContext";
+import ChatbotWidget from "@/components/ChatbotWidget";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -23,6 +25,7 @@ export default function RootLayout({ children }) {
 
           <Navbar />
           <Footer />
+          <ChatbotWidget />
         </LogoIntro>
       </body>
     </html>
