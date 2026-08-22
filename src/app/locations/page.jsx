@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
+import Navbar from "@/components/Navbar";
 import LocationsHero from "@/components/Locationshero";
 //import LocationMap from "@/components/LocationMap";
 import LocationCard from "@/components/LocationCard";
@@ -42,6 +43,7 @@ export default function LocationsPage() {
 
   return (
     <main className="min-h-screen bg-paper">
+      <Navbar />
       <LocationsHero count={locations.length} />
 
       <section className="max-w-5xl mx-auto px-6 md:px-10 py-14 md:py-20">

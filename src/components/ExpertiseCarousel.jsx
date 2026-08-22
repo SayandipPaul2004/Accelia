@@ -148,10 +148,14 @@ export default function ExpertiseCarousel({ expertiseAreas = [], error }) {
             transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="text-base sm:text-lg text-white/80 leading-relaxed max-w-2xl"
           >
-            Precision-driven execution across all critical specialty and
-            therapeutic areas — backed by deep clinical knowledge and
-            GCP-trained teams, ready to deliver results across diverse patient
-            populations.
+            Our therapeutic expertise enables CROs and sponsors to access
+            specialized research sites, experienced investigators, and targeted
+            patient populations across a broad range of clinical indications. We
+            combine therapy-focused operational knowledge with efficient site
+            activation, recruitment and retention support, quality oversight,
+            and compliance-driven execution—helping clients reduce development
+            risk, improve enrollment performance, and deliver reliable study
+            outcomes with greater speed and confidence.
           </motion.p>
         </div>
       </section>

@@ -4,6 +4,7 @@ import Typewriter from "@/components/Typewriter";
 import AboutIntro from "@/components/AboutIntro";
 import NetworkStats from "@/components/NetworkStats";
 import TrustedLogos from "@/components/TrustedLogos";
+import InsightsPage from "@/components/Insights";
 export default function Home() {
   return (
     <main>
@@ -51,6 +52,7 @@ export default function Home() {
       <AboutIntro />
       <NetworkStats />
       <TrustedLogos />
+      <InsightsPage />
     </main>
   );
 }

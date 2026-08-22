@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -345,6 +346,8 @@ export default function ContactPage() {
 
   return (
     <main className="bg-white">
+      <Navbar />
+
       {/* ---------- Hero ---------- */}
       <section
         ref={heroRef}

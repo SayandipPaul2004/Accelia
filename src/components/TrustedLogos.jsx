@@ -41,7 +41,7 @@ export default function TrustedLogos() {
       </div>
 
       <p className="text-sm text-slate-500 italic text-center max-w-3xl mx-auto mt-10 md:mt-14 px-4">
-        The logos shown represent organizations with whom Clinosis, or our
+        The logos shown represent organizations with whom Accelia , or our
         affiliated research sites, have been involved in clinical trial support.
         Inclusion of these logos does not imply endorsement, sponsorship, or
         formal partnership. All trademarks and registered trademarks are the

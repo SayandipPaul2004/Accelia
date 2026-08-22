@@ -23,7 +23,7 @@ export default function AboutIntro() {
 
         {/* Description */}
         <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto mb-10">
-          Accelia, LLC is a next-generation Site Management Organization (SMO)
+          Accelia is a next-generation Site Management Organization (SMO)
           committed to connecting research-ready sites with leading Sponsors and
           CROs. From feasibility to startup and beyond, we streamline every step
           of the clinical trial process for faster, more successful outcomes.

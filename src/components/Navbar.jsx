@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 
@@ -15,18 +16,23 @@ const navLinks = [
     dropdown: [
       { label: "About Us", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "News & Events", href: "/news" },
+      { label: "Latest Insights", href: "/insights" },
       { label: "Locations", href: "/locations" },
     ],
   },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const forceSolid = pathname.startsWith("/insights");
+
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(null);
+
+  const isSolid = scrolled || forceSolid;
 
   const topBarRef = useRef(null);
   const midBarRef = useRef(null);
@@ -109,13 +115,13 @@ export default function Navbar() {
         animate={{
           backgroundColor: mobileOpen
             ? "#2547d0"
-            : scrolled
+            : isSolid
               ? "rgba(10,23,48,0.92)"
               : "rgba(0,0,0,0)",
-          borderBottomColor: scrolled
+          borderBottomColor: isSolid
             ? "rgba(255,255,255,0.08)"
             : "rgba(255,255,255,0)",
-          backdropFilter: scrolled || mobileOpen ? "blur(10px)" : "blur(0px)",
+          backdropFilter: isSolid || mobileOpen ? "blur(10px)" : "blur(0px)",
         }}
         transition={{ duration: 0.35, ease: "easeOut" }}
         className="relative z-[60] border-b"

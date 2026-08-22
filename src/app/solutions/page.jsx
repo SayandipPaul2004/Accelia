@@ -82,7 +82,7 @@ export default function SolutionsPage() {
       <Navbar />
 
       {/* hero — full-bleed image with navy overlay, navbar floats on top */}
-      <section className="relative min-h-[480px] sm:min-h-[560px] flex items-end overflow-hidden">
+      <section className="relative min-h-[480px] sm:min-h-[560px] flex items-center overflow-hidden">
         <img
           src="/assets/sol2.jpg"
           alt=""
@@ -90,15 +90,17 @@ export default function SolutionsPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#152f8f]/70 via-[#152f8f]/55 to-[#0A1730]/90" />
 
-        <div className="relative z-10 px-6 sm:px-10 pb-12 sm:pb-16 pt-28 max-w-4xl mx-auto sm:mx-0">
+        <div className="relative z-10 px-6 sm:px-10 pt-20 pb-12 sm:pb-16 max-w-4xl mx-auto sm:mx-0">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 sm:mb-6">
             Specialized Therapeutic Solutions
           </h1>
           <p className="text-white/85 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Our network spans specialists across every major therapeutic area,
-            backed by GCP-trained investigators. Our deep specialization ensures
-            that Sponsors and CROs can find the right sites with the right
-            patient populations—ready to deliver results.
+            Specialized Therapeutic Solutions Accelia Clinical Solutions
+            delivers specialized therapeutic-area support for CROs and sponsors
+            across India. Our experienced site network, patient-centered
+            recruitment strategies, compliance-driven operations, and
+            quality-focused delivery enable reliable execution of complex
+            clinical trials across diverse therapeutic areas.
           </p>
         </div>
       </section>

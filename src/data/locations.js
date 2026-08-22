@@ -11,8 +11,8 @@ export const locations = [
     coords: { x: 76, y: 58 },
   },
   {
-    id: "bengaluru",
-    city: "Bengaluru",
+    id: "Guhawati",
+    city: "Guhawati",
     tag: "Regional Office",
     country: "India",
     address: "Tower B, Outer Ring Road, Bengaluru, KA 560103",
@@ -22,8 +22,8 @@ export const locations = [
     coords: { x: 56, y: 74 },
   },
   {
-    id: "hyderabad",
-    city: "Hyderabad",
+    id: "Patna",
+    city: "Patna",
     tag: "Regional Office",
     country: "India",
     address: "HITEC City, Madhapur, Hyderabad, TG 500081",
@@ -33,8 +33,8 @@ export const locations = [
     coords: { x: 58, y: 62 },
   },
   {
-    id: "remote",
-    city: "Distributed Team",
+    id: "Bhubenaswar",
+    city: "Bhubenaswar",
     tag: "Remote-first",
     country: "Across India",
     address:

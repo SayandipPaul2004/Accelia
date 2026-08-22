@@ -49,23 +49,11 @@ export default function ExpertiseCard({
       <div className="absolute top-5 left-5 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center text-xl sm:text-2xl">
         {icon}
       </div>
-
-      {/* text content */}
-      <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+      <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 pb-6 sm:pb-7">
         <h3 className="text-lg sm:text-[22px] leading-tight font-semibold text-white mb-2">
           {title}
         </h3>
-        <p
-          className="text-white/80 text-sm leading-relaxed"
-          style={{
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          }}
-        >
-          {description}
-        </p>
+        <p className="text-white/80 text-sm leading-relaxed">{description}</p>
       </div>
     </motion.div>
   );
