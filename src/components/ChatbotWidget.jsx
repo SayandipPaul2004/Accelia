@@ -5,10 +5,6 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
-/* ------------------------------------------------------------------ */
-/* FAQ data — edit this to match your real content                     */
-/* ------------------------------------------------------------------ */
-
 const FAQS = [
   {
     id: "what-is-accelia",
@@ -86,6 +82,8 @@ const FAQS = [
       "email",
       "phone",
       "speak to a human",
+      "get in touch",
+      "in touch",
     ],
     question: "How do I get in touch with your team?",
     answer:
@@ -130,8 +128,10 @@ function findAnswer(input) {
     return { answer: THANKS_REPLY };
   }
 
-  const match = FAQS.find((faq) =>
-    faq.keywords.some((kw) => text.includes(kw)),
+  const match = FAQS.find(
+    (faq) =>
+      faq.keywords.some((kw) => text.includes(kw)) ||
+      text.includes(normalize(faq.question)),
   );
   return match ? { answer: match.answer } : null;
 }
@@ -213,16 +213,28 @@ export default function ChatbotWidget() {
   }
 
   function respondTo(userText) {
-    pushMessage({ from: "user", text: userText });
+    const userMsg = {
+      id: `${Date.now()}-${Math.random()}`,
+      from: "user",
+      text: userText,
+    };
+    setMessages((prev) => [...prev, userMsg]);
     setIsTyping(true);
 
-    const result = findAnswer(userText);
+    const history = [...messages, userMsg]
+      .filter((m) => m.from === "user" || m.from === "bot")
+      .slice(-12); // keep the payload small — last ~12 turns is plenty of context
 
-    setTimeout(
-      () => {
+    fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
         setIsTyping(false);
-        if (result) {
-          pushMessage({ from: "bot", text: result.answer });
+        if (data.reply) {
+          pushMessage({ from: "bot", text: data.reply });
         } else {
           pushMessage({
             from: "bot",
@@ -230,9 +242,15 @@ export default function ChatbotWidget() {
             showContactCta: true,
           });
         }
-      },
-      550 + Math.random() * 350,
-    ); // slight variance feels less robotic
+      })
+      .catch(() => {
+        setIsTyping(false);
+        pushMessage({
+          from: "bot",
+          text: FALLBACK_ANSWER,
+          showContactCta: true,
+        });
+      });
   }
 
   function handleQuickReply(faq) {
